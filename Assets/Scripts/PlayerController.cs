@@ -63,11 +63,12 @@ public class PlayerController : MonoBehaviour
             targetPosition = transform.position + movement;
             smoothedPosition = transform.position;
             lustCounter++;
-            if (lustCounter >= lustMax)
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            }
-            Debug.Log($"Lust counter = {lustCounter}");
+           
+        }
+
+        if (lustCounter >= lustMax)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
         if (canMove && isMoving)
@@ -96,6 +97,11 @@ public class PlayerController : MonoBehaviour
     public void DecreaseBloodlustCounter(int value)
     {
         lustCounter = Mathf.Max(0, lustCounter - value);
+    }
+
+    public void IncreaseBloodLustCounter(int value)
+    {
+        lustCounter = Mathf.Min(lustMax, lustCounter + value);
     }
 
     private int layerMaskToLayer(LayerMask layerMask)
