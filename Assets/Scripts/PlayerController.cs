@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     // Collisions
     [SerializeField] private LayerMask wallLayerMask, enemyMask;
 
+    // Enemy
+    private GameObject enemy = null;
+
     private void Update()
     {
         // Collisions
@@ -79,7 +82,23 @@ public class PlayerController : MonoBehaviour
         RaycastHit2D enemyLook = Physics2D.Raycast(transform.position, facing, Mathf.Infinity, wallLayerMask | enemyMask);
         if (enemyLook && enemyLook.transform.gameObject.layer == layerMaskToLayer(enemyMask))
         {
-            flying = true;   
+            enemy = enemyLook.transform.gameObject;
+            flying = true;
+        }
+
+        if (flying)
+        {
+            isMoving = true;
+
+            if (Vector2.Distance(enemy.transform.position, transform.position) < 0.1f)
+            {
+                transform.position = enemy.transform.position;
+                Destroy(enemy);
+                isMoving = false;
+                flying = false;
+            }
+            Debug.Log("i DO BE MOVING DOE");
+            transform.position += new Vector3(facing.x, facing.y, 0);
         }
     }
 
