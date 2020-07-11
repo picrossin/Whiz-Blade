@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 facing = Vector2.down;
     private Vector2 flightStartingPoint = Vector2.zero;
     private float currentFlightSpeed = 0f, flightDistance = 0f;
+    private MovementManager movementManager;
 
     // Blood-lust counter
     [Header("Bloodlust Settings")]
@@ -38,11 +39,17 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        // Get movement manager
+        if (movementManager == null)
+        {
+            movementManager = GameObject.FindWithTag("MovementManager").GetComponent<MovementManager>();
+        }
+
         // Collisions
-        RaycastHit2D upHit = Physics2D.Raycast(transform.position, Vector2.up, 1, wallLayerMask | gateMask);
-        RaycastHit2D downHit = Physics2D.Raycast(transform.position, Vector2.down, 1, wallLayerMask | gateMask);
-        RaycastHit2D rightHit = Physics2D.Raycast(transform.position, Vector2.right, 1, wallLayerMask | gateMask);
-        RaycastHit2D leftHit = Physics2D.Raycast(transform.position, Vector2.left, 1, wallLayerMask | gateMask);
+        RaycastHit2D upHit = Physics2D.Raycast(transform.position, Vector2.up, 0.6f, wallLayerMask | gateMask);
+        RaycastHit2D downHit = Physics2D.Raycast(transform.position, Vector2.down, 0.6f, wallLayerMask | gateMask);
+        RaycastHit2D rightHit = Physics2D.Raycast(transform.position, Vector2.right, 0.6f, wallLayerMask | gateMask);
+        RaycastHit2D leftHit = Physics2D.Raycast(transform.position, Vector2.left, 0.6f, wallLayerMask | gateMask);
 
         // Get input (ugly, but necessary for tile-based movement)
         if (!isMoving)
@@ -98,6 +105,7 @@ public class PlayerController : MonoBehaviour
             (touchingBox == null || (touchingBox != null && canPushBox)))
         {
             isMoving = true;
+            movementManager.Move();
             flightAvailable = true;
             targetPosition = transform.position + movement;
             smoothedPosition = transform.position;
@@ -137,7 +145,20 @@ public class PlayerController : MonoBehaviour
         // Fly to the enemy if necessary
         if (flying)
         {
-            if (facing.x == 1 && rightHit)
+            if (Vector2.Distance(transform.position, flightStartingPoint) >= flightDistance)
+            {
+                transform.position = enemy.transform.position;
+                Destroy(enemy);
+                DecreaseBloodlustCounter(enemyDecreaseAmount);
+
+                movementManager.Move();
+                movement = Vector3.zero;
+                flightAvailable = false;
+                isMoving = false;
+                flying = false;
+                flightDistanceSet = false;
+            }
+            else if (facing.x == 1 && rightHit)
             {
                 ResetAfterFlight(rightHit, new Vector3(1, 0));
             }
@@ -152,18 +173,6 @@ public class PlayerController : MonoBehaviour
             else if (facing.y == -1 && downHit)
             {
                 ResetAfterFlight(downHit, new Vector3(0, -1));
-            }
-            else if (Vector2.Distance(transform.position, flightStartingPoint) >= flightDistance)
-            {
-                transform.position = enemy.transform.position;
-                Destroy(enemy);
-                DecreaseBloodlustCounter(enemyDecreaseAmount);
-
-                movement = Vector3.zero;
-                flightAvailable = false;
-                isMoving = false;
-                flying = false;
-                flightDistanceSet = false;
             }
             else
             {
@@ -218,6 +227,14 @@ public class PlayerController : MonoBehaviour
         transform.position = hit.transform.position - displacement;
         IncreaseBloodLustCounter(1);
 
+        if (Mathf.Floor(Vector2.Distance(transform.position, flightStartingPoint)) >= Mathf.Floor(flightDistance))
+        {
+            transform.position = enemy.transform.position;
+            Destroy(enemy);
+            DecreaseBloodlustCounter(enemyDecreaseAmount);
+        }
+
+        movementManager.Move();
         movement = Vector3.zero;
         flightAvailable = false;
         isMoving = false;
