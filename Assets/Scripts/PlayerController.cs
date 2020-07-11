@@ -93,6 +93,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void DecreaseBloodlustCounter(int value)
+    {
+        lustCounter = Mathf.Max(0, lustCounter - value);
+    }
+
     private int layerMaskToLayer(LayerMask layerMask)
     {
         int layerNumber = 0;
