@@ -18,7 +18,7 @@ public class Pit : MonoBehaviour
         }
         else
         {
-            if (Vector2.Distance(player.transform.position, transform.position) < 0.1f)
+            if (Vector2.Distance(player.transform.position, transform.position) < 0.1f && !player.GetComponent<PlayerController>().IsFlying())
             {
                 player.GetComponent<PlayerController>().IncreaseBloodLustCounter(value);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

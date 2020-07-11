@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
 
         // Look for enemies
         RaycastHit2D enemyLook = Physics2D.Raycast(transform.position, facing, Mathf.Infinity, wallLayerMask | enemyMask);
-        if (enemyLook && enemyLook.transform.gameObject.layer == layerMaskToLayer(enemyMask))
+        if (enemyLook && enemyLook.transform.gameObject.layer == LayerMaskToLayer(enemyMask))
         {
             enemy = enemyLook.transform.gameObject;
             flying = true;
@@ -142,7 +142,12 @@ public class PlayerController : MonoBehaviour
         lustCounter = Mathf.Min(lustMax, lustCounter + value);
     }
 
-    private int layerMaskToLayer(LayerMask layerMask)
+    public bool IsFlying()
+    {
+        return flying;
+    }
+
+    private int LayerMaskToLayer(LayerMask layerMask)
     {
         int layerNumber = 0;
         int layer = layerMask.value;
