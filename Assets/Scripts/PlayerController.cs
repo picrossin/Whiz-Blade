@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class PlayerController : MonoBehaviour
     private Vector3 movement = Vector3.zero;
     private Vector3 smoothedPosition, targetPosition;
     private Vector2 facing = Vector2.down;
+
+    // Blood-lust counter
+    [SerializeField] [Range(1, 10)] private int lustMax = 6;
+    private int lustCounter = 0;
 
     // Collisions
     [SerializeField] private LayerMask wallLayerMask, enemyMask;
@@ -39,7 +44,6 @@ public class PlayerController : MonoBehaviour
             {
                 movement = new Vector3(1, 0);
                 facing = new Vector2(1, 0);
-
             }
             else if (Input.GetButtonDown("Left") && !leftHit)
             {
@@ -58,6 +62,12 @@ public class PlayerController : MonoBehaviour
             isMoving = true;
             targetPosition = transform.position + movement;
             smoothedPosition = transform.position;
+            lustCounter++;
+            if (lustCounter >= lustMax)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+            Debug.Log($"Lust counter = {lustCounter}");
         }
 
         if (canMove && isMoving)
