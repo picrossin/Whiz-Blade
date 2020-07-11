@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,7 +10,11 @@ public class PlayerController : MonoBehaviour
     private bool canMove = true, isMoving = false, flying = false;
     private Vector3 movement = Vector3.zero;
     private Vector3 smoothedPosition, targetPosition;
-    private Vector2 Facing = Vector2.down;
+    private Vector2 facing = Vector2.down;
+
+    // Blood-lust counter
+    [SerializeField] [Range(1, 10)] private int lustMax = 6;
+    private int lustCounter = 0;
 
     // Collisions
     [SerializeField] private LayerMask wallLayerMask, enemyMask;
@@ -42,7 +47,6 @@ public class PlayerController : MonoBehaviour
             {
                 movement = new Vector3(1, 0);
                 facing = new Vector2(1, 0);
-
             }
             else if (Input.GetButtonDown("Left") && !leftHit)
             {
@@ -61,6 +65,13 @@ public class PlayerController : MonoBehaviour
             isMoving = true;
             targetPosition = transform.position + movement;
             smoothedPosition = transform.position;
+            lustCounter++;
+           
+        }
+
+        if (lustCounter >= lustMax)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
         if (canMove && isMoving)
@@ -100,6 +111,16 @@ public class PlayerController : MonoBehaviour
             Debug.Log("i DO BE MOVING DOE");
             transform.position += new Vector3(facing.x, facing.y, 0);
         }
+    }
+
+    public void DecreaseBloodlustCounter(int value)
+    {
+        lustCounter = Mathf.Max(0, lustCounter - value);
+    }
+
+    public void IncreaseBloodLustCounter(int value)
+    {
+        lustCounter = Mathf.Min(lustMax, lustCounter + value);
     }
 
     private int layerMaskToLayer(LayerMask layerMask)

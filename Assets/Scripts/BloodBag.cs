@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class Exit : MonoBehaviour
+public class BloodBag : MonoBehaviour
 {
+    [SerializeField] [Range(1, 10)] private int value = 3;
+
     private GameObject player;
 
-    private void Update()
+    void Update()
     {
         if (player == null)
         {
@@ -17,7 +18,8 @@ public class Exit : MonoBehaviour
         {
             if (Vector2.Distance(player.transform.position, transform.position) < 0.1f)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                player.GetComponent<PlayerController>().DecreaseBloodlustCounter(value);
+                Destroy(gameObject);
             }
         }
     }
