@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     // Blood-lust counter
     [Header("Bloodlust Settings")]
     [SerializeField] [Range(1, 10)] private int lustMax = 6;
+    [SerializeField] [Range(1, 10)] private int enemyDecreaseAmount = 3;
     private int lustCounter = 0;
 
     // Collisions
@@ -87,7 +88,7 @@ public class PlayerController : MonoBehaviour
             isMoving = true;
             targetPosition = transform.position + movement;
             smoothedPosition = transform.position;
-            lustCounter++;
+            IncreaseBloodLustCounter(1);
         }
 
         // Move to another space normally
@@ -114,6 +115,8 @@ public class PlayerController : MonoBehaviour
             {
                 transform.position = enemy.transform.position;
                 Destroy(enemy);
+                DecreaseBloodlustCounter(enemyDecreaseAmount);
+
                 isMoving = false;
                 flying = false;
                 flightDistanceSet = true;
