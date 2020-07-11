@@ -9,7 +9,7 @@ public class Spikes : MonoBehaviour
 
     private GameObject player;
 
-    void Update()
+    private void Update()
     {
         if (player == null)
         {
