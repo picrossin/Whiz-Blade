@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 553982529416065020}
   m_Layer: 8
   m_Name: Wall
-  m_TagString: Exit
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

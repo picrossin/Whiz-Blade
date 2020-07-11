@@ -99,12 +99,14 @@ MonoBehaviour:
   baseFlySpeed: 0.1
   flightAccelerationAmount: 0.002
   lustMax: 6
+  enemyDecreaseAmount: 3
   wallLayerMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 1280
   enemyMask:
     serializedVersion: 2
     m_Bits: 512
+  boxTag: Box
 --- !u!61 &4164677603339097593
 BoxCollider2D:
   m_ObjectHideFlags: 0

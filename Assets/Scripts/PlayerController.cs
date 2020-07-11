@@ -26,6 +26,10 @@ public class PlayerController : MonoBehaviour
     // Collisions
     [Header("Collision Settings")]
     [SerializeField] private LayerMask wallLayerMask, enemyMask;
+    [SerializeField] private string boxTag;
+    private GameObject touchingBox = null;
+    private bool canPushBox = false;
+    private Vector2 boxOffset = Vector2.zero;
 
     // Enemy
     private GameObject enemy = null;
@@ -41,25 +45,30 @@ public class PlayerController : MonoBehaviour
         // Get input (ugly, but necessary for tile-based movement)
         if (!isMoving)
         {
-            if (Input.GetButtonDown("Up") && !upHit)
+            canPushBox = false;
+            if (Input.GetButtonDown("Up"))
             {
-                movement = new Vector3(0, 1);
-                facing = new Vector2(0, 1);
+                SetInput(upHit, new Vector2(0, 1));
+                if (touchingBox != null && !touchingBox.GetComponent<Box>().upHit)
+                    canPushBox = true;
             }
-            else if (Input.GetButtonDown("Down") && !downHit)
+            else if (Input.GetButtonDown("Down"))
             {
-                movement = new Vector3(0, -1);
-                facing = new Vector2(0, -1);
+                SetInput(downHit, new Vector2(0, -1));
+                if (touchingBox != null && !touchingBox.GetComponent<Box>().downHit)
+                    canPushBox = true;
             }
-            else if (Input.GetButtonDown("Right") && !rightHit)
+            else if (Input.GetButtonDown("Right"))
             {
-                movement = new Vector3(1, 0);
-                facing = new Vector2(1, 0);
+                SetInput(rightHit, new Vector2(1, 0));
+                if (touchingBox != null && !touchingBox.GetComponent<Box>().rightHit)
+                    canPushBox = true;
             }
-            else if (Input.GetButtonDown("Left") && !leftHit)
+            else if (Input.GetButtonDown("Left"))
             {
-                movement = new Vector3(-1, 0);
-                facing = new Vector2(-1, 0);
+                SetInput(leftHit, new Vector2(-1, 0));
+                if (touchingBox != null && !touchingBox.GetComponent<Box>().leftHit)
+                    canPushBox = true;
             }
             else
             {
@@ -83,7 +92,8 @@ public class PlayerController : MonoBehaviour
         }
 
         // Check for movement
-        if (canMove && !isMoving && movement != Vector3.zero && !flying)
+        if (canMove && !isMoving && movement != Vector3.zero && !flying && 
+            (touchingBox == null || (touchingBox != null && canPushBox)))
         {
             isMoving = true;
             targetPosition = transform.position + movement;
@@ -94,17 +104,30 @@ public class PlayerController : MonoBehaviour
         // Move to another space normally
         if (canMove && isMoving && !flying)
         {
-            Debug.Log("Regular move");
             if (Vector3.Distance(smoothedPosition, targetPosition) > 0.1f)
             {
                 smoothedPosition = Vector3.Lerp(smoothedPosition, targetPosition, movementSmoothingAmount * Time.deltaTime);
                 transform.position = smoothedPosition;
+
+                if (touchingBox != null && canPushBox)
+                {
+                    boxOffset = targetPosition - smoothedPosition;
+                    boxOffset.Normalize();
+                    touchingBox.transform.position = transform.position + 
+                        new Vector3(boxOffset.x, boxOffset.y);
+                }
             }
             else
             {
                 transform.position = targetPosition;
                 movement = Vector3.zero;
                 isMoving = false;
+
+                if (touchingBox != null && canPushBox)
+                {
+                    touchingBox.transform.position = transform.position +
+                        new Vector3(boxOffset.x, boxOffset.y);
+                }
             }
         }
 
@@ -148,6 +171,25 @@ public class PlayerController : MonoBehaviour
     public bool IsFlying()
     {
         return flying;
+    }
+
+    private void SetInput(RaycastHit2D hit, Vector2 direction)
+    {
+        touchingBox = CheckBoxCollisions(hit);
+
+        if (!hit || touchingBox != null)
+        {
+            movement = direction;
+            facing = direction;
+        }
+    }
+
+    private GameObject CheckBoxCollisions(RaycastHit2D hit)
+    {
+        GameObject returnBox = null;
+        if (hit && hit.transform.gameObject.tag == boxTag)
+            returnBox = hit.transform.gameObject;
+        return returnBox;
     }
 
     private int LayerMaskToLayer(LayerMask layerMask)

@@ -10,7 +10,7 @@ public class Pit : MonoBehaviour
 
     private GameObject player;
 
-    void Update()
+    private void Update()
     {
         if (player == null)
         {
