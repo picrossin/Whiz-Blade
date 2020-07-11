@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     private bool canMove = true, isMoving = false, flying = false;
     private Vector3 movement = Vector3.zero;
     private Vector3 smoothedPosition, targetPosition;
-    private Vector2 facing = Vector2.down;
+    private Vector2 Facing = Vector2.down;
 
     // Collisions
     [SerializeField] private LayerMask wallLayerMask, enemyMask;
