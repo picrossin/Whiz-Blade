@@ -6,17 +6,24 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     // Movement
+    [Header("Movement Settings")]
     [SerializeField] [Range(1.0f, 50.0f)] private float movementSmoothingAmount = 5.0f;
-    private bool canMove = true, isMoving = false, flying = false;
+    [SerializeField] [Range(0.001f, 1.0f)] private float baseFlySpeed = 0.15f;
+    [SerializeField] [Range(0.001f, 1.0f)] private float flightAccelerationAmount = 0.1f;
+    private bool canMove = true, isMoving = false, flying = false, flightDistanceSet = false;
     private Vector3 movement = Vector3.zero;
     private Vector3 smoothedPosition, targetPosition;
     private Vector2 facing = Vector2.down;
+    private Vector2 flightStartingPoint = Vector2.zero;
+    private float currentFlightSpeed = 0f, flightDistance = 0f;
 
     // Blood-lust counter
+    [Header("Bloodlust Settings")]
     [SerializeField] [Range(1, 10)] private int lustMax = 6;
     private int lustCounter = 0;
 
     // Collisions
+    [Header("Collision Settings")]
     [SerializeField] private LayerMask wallLayerMask, enemyMask;
 
     // Enemy
@@ -58,24 +65,35 @@ public class PlayerController : MonoBehaviour
                 movement = Vector3.zero;
             }
         }
-        
-        // Movement
-        if (canMove && !isMoving && movement != Vector3.zero)
+
+        // Look for enemies
+        RaycastHit2D enemyLook = Physics2D.Raycast(transform.position, facing, Mathf.Infinity, wallLayerMask | enemyMask);
+        if (enemyLook && enemyLook.transform.gameObject.layer == layerMaskToLayer(enemyMask))
+        {
+            enemy = enemyLook.transform.gameObject;
+            flying = true;
+
+            if (!flightDistanceSet)
+            {
+                flightDistance = Vector3.Distance(transform.position, enemy.transform.position);
+                flightStartingPoint = transform.position;
+                flightDistanceSet = true;
+            }
+        }
+
+        // Check for movement
+        if (canMove && !isMoving && movement != Vector3.zero && !flying)
         {
             isMoving = true;
             targetPosition = transform.position + movement;
             smoothedPosition = transform.position;
             lustCounter++;
-           
         }
 
-        if (lustCounter >= lustMax)
+        // Move to another space normally
+        if (canMove && isMoving && !flying)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
-
-        if (canMove && isMoving)
-        {
+            Debug.Log("Regular move");
             if (Vector3.Distance(smoothedPosition, targetPosition) > 0.1f)
             {
                 smoothedPosition = Vector3.Lerp(smoothedPosition, targetPosition, movementSmoothingAmount * Time.deltaTime);
@@ -89,27 +107,28 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Look for enemies
-        RaycastHit2D enemyLook = Physics2D.Raycast(transform.position, facing, Mathf.Infinity, wallLayerMask | enemyMask);
-        if (enemyLook && enemyLook.transform.gameObject.layer == layerMaskToLayer(enemyMask))
-        {
-            enemy = enemyLook.transform.gameObject;
-            flying = true;
-        }
-
+        // Fly to the enemy if necessary
         if (flying)
         {
-            isMoving = true;
-
-            if (Vector2.Distance(enemy.transform.position, transform.position) < 0.1f)
+            if (Vector2.Distance(transform.position, flightStartingPoint) >= flightDistance)
             {
                 transform.position = enemy.transform.position;
                 Destroy(enemy);
                 isMoving = false;
                 flying = false;
+                flightDistanceSet = true;
             }
-            Debug.Log("i DO BE MOVING DOE");
-            transform.position += new Vector3(facing.x, facing.y, 0);
+            else
+            {
+                isMoving = true;
+                currentFlightSpeed += flightAccelerationAmount;
+                transform.position += new Vector3(facing.x, facing.y, 0) * currentFlightSpeed;
+            }
+        }
+
+        if (lustCounter >= lustMax)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 
