@@ -9,6 +9,10 @@ TagManager:
   - Pit
   - MovementManager
   - MovingEnemy
+  - Projectile
+  - Wall
+  - Gate
+  - ShootingEnemy
   layers:
   - Default
   - TransparentFX

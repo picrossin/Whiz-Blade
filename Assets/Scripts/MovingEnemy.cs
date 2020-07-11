@@ -22,7 +22,7 @@ public class MovingEnemy : MonoBehaviour
 
     private void Update()
     {
-        // Smooth ovement that runs every frame
+        // Smooth movement that runs every frame
         if (moving)
         {
             if (Vector3.Distance(smoothedPosition, targetPosition) > 0.1f)
