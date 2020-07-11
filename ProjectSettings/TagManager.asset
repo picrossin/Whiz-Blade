@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Exit
+  - Box
+  - Pit
   layers:
   - Default
   - TransparentFX
@@ -16,9 +18,9 @@ TagManager:
   - 
   - Wall
   - Enemy
-  - 
-  - 
-  - 
+  - Box
+  - Spikes
+  - Pit
   - 
   - 
   - 
