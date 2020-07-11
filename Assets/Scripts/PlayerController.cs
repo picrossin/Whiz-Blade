@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 smoothedPosition, targetPosition;
 
     // Collisions
-    [SerializeField] LayerMask wallLayerMask;
+    [SerializeField] private LayerMask wallLayerMask;
 
     private void Update()
     {
