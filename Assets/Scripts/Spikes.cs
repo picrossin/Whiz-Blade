@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class Spikes : MonoBehaviour
 {
-    [SerializeField] [Range(1, 10)] private int value = 6;
-
     private GameObject player;
 
     private void Update()
@@ -19,7 +17,7 @@ public class Spikes : MonoBehaviour
         {
             if (Vector2.Distance(player.transform.position, transform.position) < 0.1f)
             {
-                player.GetComponent<PlayerController>().IncreaseBloodLustCounter(value);
+                player.GetComponent<PlayerController>().IncreaseBloodLustCounter(player.GetComponent<PlayerController>().GetLustMax());
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }

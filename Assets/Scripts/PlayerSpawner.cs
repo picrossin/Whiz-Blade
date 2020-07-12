@@ -5,9 +5,11 @@ using UnityEngine;
 public class PlayerSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject player;
+    [SerializeField] [Range(1, 10)] private int lustMax = 6;
 
     private void Start()
     {
-        Instantiate(player, transform.position, Quaternion.identity);   
+        GameObject instance = Instantiate(player, transform.position, Quaternion.identity);
+        instance.GetComponent<PlayerController>().SetLustMax(lustMax);
     }
 }

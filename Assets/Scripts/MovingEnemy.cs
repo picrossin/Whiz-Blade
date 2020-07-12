@@ -12,6 +12,7 @@ public class MovingEnemy : MonoBehaviour
     private Vector3 smoothedPosition = Vector3.zero, targetPosition = Vector3.zero;
     private int pointIndex = 0;
     private bool moving = false;
+    private GameObject player;
 
     private void Start()
     {
@@ -22,6 +23,12 @@ public class MovingEnemy : MonoBehaviour
 
     private void Update()
     {
+        // Get player
+        if (player == null)
+        {
+            player = GameObject.FindWithTag("Player");
+        }
+
         // Smooth movement that runs every frame
         if (moving)
         {
@@ -32,6 +39,11 @@ public class MovingEnemy : MonoBehaviour
             }
             else
             {
+                if (player != null && Vector2.Distance(player.transform.position, transform.position) < 0.1f)
+                {
+                    player.GetComponent<PlayerController>().IncreaseBloodLustCounter(player.GetComponent<PlayerController>().GetLustMax());
+                }
+
                 transform.position = targetPosition;
                 moving = false;
             }

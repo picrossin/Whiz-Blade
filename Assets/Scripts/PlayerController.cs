@@ -109,7 +109,6 @@ public class PlayerController : MonoBehaviour
             flightAvailable = true;
             targetPosition = transform.position + movement;
             smoothedPosition = transform.position;
-            IncreaseBloodLustCounter(1);
         }
 
         // Move to another space normally
@@ -130,6 +129,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+                IncreaseBloodLustCounter(1);
                 transform.position = targetPosition;
                 movement = Vector3.zero;
                 isMoving = false;
@@ -181,21 +181,28 @@ public class PlayerController : MonoBehaviour
                 transform.position += new Vector3(facing.x, facing.y, 0) * currentFlightSpeed;
             }
         }
+    }
 
-        if (lustCounter >= lustMax)
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
+    public void SetLustMax(int value)
+    {
+        lustMax = value;
+    }
+
+    public int GetLustMax()
+    {
+        return lustMax;
     }
 
     public void DecreaseBloodlustCounter(int value)
     {
         lustCounter = Mathf.Max(0, lustCounter - value);
+        CheckReload();
     }
 
     public void IncreaseBloodLustCounter(int value)
     {
         lustCounter = Mathf.Min(lustMax, lustCounter + value);
+        CheckReload();
     }
 
     public bool IsFlying()
@@ -240,6 +247,14 @@ public class PlayerController : MonoBehaviour
         isMoving = false;
         flying = false;
         flightDistanceSet = false;
+    }
+
+    private void CheckReload()
+    {
+        if (lustCounter >= lustMax)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 
     private int LayerMaskToLayer(LayerMask layerMask)

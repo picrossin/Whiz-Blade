@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class Pit : MonoBehaviour
 {
-    [SerializeField] [Range(1, 10)] private int value = 6;
-
     private GameObject player;
     private bool filled = false;
 
@@ -20,7 +18,7 @@ public class Pit : MonoBehaviour
         {
             if (Vector2.Distance(player.transform.position, transform.position) < 0.1f && !filled && !player.GetComponent<PlayerController>().IsFlying())
             {
-                player.GetComponent<PlayerController>().IncreaseBloodLustCounter(value);
+                player.GetComponent<PlayerController>().IncreaseBloodLustCounter(player.GetComponent<PlayerController>().GetLustMax());
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
