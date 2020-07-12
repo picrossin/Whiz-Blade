@@ -8,6 +8,7 @@ public class MovementManager : MonoBehaviour
     [SerializeField] private string movingEnemyTag = "MovingEnemy";
     [SerializeField] private string shootingEnemyTag = "ShootingEnemy";
     [SerializeField] private string projectileTag = "Projectile";
+    [SerializeField] private GameObject levelMusic;
 
     private List<GameObject> movingEnemies = new List<GameObject>();
     private List<GameObject> shootingEnemies = new List<GameObject>();
@@ -18,6 +19,11 @@ public class MovementManager : MonoBehaviour
         movingEnemies = GameObject.FindGameObjectsWithTag(movingEnemyTag).ToList();
         shootingEnemies = GameObject.FindGameObjectsWithTag(shootingEnemyTag).ToList();
         projectiles = GameObject.FindGameObjectsWithTag(projectileTag).ToList();
+
+        if (!GameObject.FindGameObjectWithTag("LevelMusic"))
+        {
+            Instantiate(levelMusic, Vector3.zero, Quaternion.identity);
+        }
     }
 
     private void Update()

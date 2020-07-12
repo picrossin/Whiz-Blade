@@ -15,6 +15,7 @@ TagManager:
   - ShootingEnemy
   - HealthBar
   - Enemy
+  - LevelMusic
   layers:
   - Default
   - TransparentFX

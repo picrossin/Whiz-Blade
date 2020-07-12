@@ -46,3 +46,5 @@ MonoBehaviour:
   movingEnemyTag: MovingEnemy
   shootingEnemyTag: ShootingEnemy
   projectileTag: Projectile
+  levelMusic: {fileID: 180285449094813322, guid: db66bfe64f0c18a4cbf359c7d4259aeb,
+    type: 3}
