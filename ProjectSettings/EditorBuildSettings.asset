@@ -50,4 +50,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/level 9.unity
     guid: 12563d4a880d92049aba28e293aa1921
+  - enabled: 1
+    path: Assets/Scenes/Final Room.unity
+    guid: aaa33669467dcda499ba698ca32f3b11
   m_configObjects: {}
