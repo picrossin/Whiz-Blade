@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     private float currentFlightSpeed = 0f, flightDistance = 0f;
     private MovementManager movementManager;
     private string flightTrigger = "FlyDown", afterFlightTrigger = "MoveDown";
+    private bool inEnemy = false;
 
     // Blood-lust counter
     [Header("Bloodlust Settings")]
@@ -130,16 +131,26 @@ public class PlayerController : MonoBehaviour
             }
 
             // Collisions
-            RaycastHit2D upHit = Physics2D.Raycast(transform.position, Vector2.up, 0.6f, wallLayerMask | gateMask);
-            RaycastHit2D downHit = Physics2D.Raycast(transform.position, Vector2.down, 0.6f, wallLayerMask | gateMask);
-            RaycastHit2D rightHit = Physics2D.Raycast(transform.position, Vector2.right, 0.6f, wallLayerMask | gateMask);
-            RaycastHit2D leftHit = Physics2D.Raycast(transform.position, Vector2.left, 0.6f, wallLayerMask | gateMask);
+            RaycastHit2D upHit = Physics2D.Raycast(transform.position, Vector2.up, 0.55f, wallLayerMask | gateMask);
+            RaycastHit2D downHit = Physics2D.Raycast(transform.position, Vector2.down, 0.55f, wallLayerMask | gateMask);
+            RaycastHit2D rightHit = Physics2D.Raycast(transform.position, Vector2.right, 0.55f, wallLayerMask | gateMask);
+            RaycastHit2D leftHit = Physics2D.Raycast(transform.position, Vector2.left, 0.55f, wallLayerMask | gateMask);
+
+            Debug.DrawRay(transform.position, new Vector2(0, .6f));
+            Debug.DrawRay(transform.position, new Vector2(0, -.6f));
+            Debug.DrawRay(transform.position, new Vector2(-.6f, 0));
+            Debug.DrawRay(transform.position, new Vector2(.6f, 0));
+
 
             // Get input (ugly, but necessary for tile-based movement)
             if (!isMoving)
             {
                 canPushBox = false;
-                if (Input.GetButtonDown("Up"))
+                if (Input.GetButtonDown("Restart"))
+                {
+                    IncreaseBloodLustCounter(GetLustMax());
+                }
+                else if (Input.GetButtonDown("Up"))
                 {
                     animator.SetTrigger("MoveUp");
                     flightTrigger = "FlyUp";
@@ -229,7 +240,7 @@ public class PlayerController : MonoBehaviour
 
                     currentSword.GetComponent<SpriteRenderer>().enabled = false;
                     currentSword = flightSword;
-                    flightDistance = Vector3.Distance(transform.position, enemy.transform.position);
+                    flightDistance = Vector2.Distance(transform.position, enemy.transform.position);
                     flightStartingPoint = transform.position;
                     flightDistanceSet = true;
                 }
@@ -286,6 +297,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (Vector2.Distance(transform.position, flightStartingPoint) >= flightDistance)
                 {
+                    Debug.Log("Got enemy");
                     transform.position = new Vector3(enemy.transform.position.x, enemy.transform.position.y, transform.position.z);
                     Destroy(enemy);
                     DecreaseBloodlustCounter(enemyDecreaseAmount);
@@ -296,6 +308,7 @@ public class PlayerController : MonoBehaviour
                     }
                     Instantiate(killEnemySound);
 
+                    inEnemy = false;
                     runParticles.GetComponent<ParticleSystem>().Stop();
                     screenShake.ShakeScreen(0.2f, 0.1f, 2);
                     movementManager.Move();
@@ -309,28 +322,28 @@ public class PlayerController : MonoBehaviour
                     currentSword.GetComponent<SpriteRenderer>().enabled = false;
                     currentSword = afterFlightSword;
                 }
-                else if (facing.x == 1 && rightHit)
+                else if (facing.x == 1 && rightHit && !inEnemy)
                 {
                     ResetAfterFlight(rightHit, new Vector3(1, 0));
                     animator.SetTrigger("MoveRight");
                     currentSword.GetComponent<SpriteRenderer>().enabled = false;
                     currentSword = rightSwordIdle;
                 }
-                else if (facing.x == -1 && leftHit)
+                else if (facing.x == -1 && leftHit && !inEnemy)
                 {
                     ResetAfterFlight(leftHit, new Vector3(-1, 0));
                     animator.SetTrigger("MoveLeft");
                     currentSword.GetComponent<SpriteRenderer>().enabled = false;
                     currentSword = leftSwordIdle;
                 }
-                else if (facing.y == 1 && upHit)
+                else if (facing.y == 1 && upHit && !inEnemy)
                 {
                     ResetAfterFlight(upHit, new Vector3(0, 1));
                     animator.SetTrigger("MoveUp");
                     currentSword.GetComponent<SpriteRenderer>().enabled = false;
                     currentSword = upSwordIdle;
                 }
-                else if (facing.y == -1 && downHit)
+                else if (facing.y == -1 && downHit && !inEnemy)
                 {
                     ResetAfterFlight(downHit, new Vector3(0, -1));
                     animator.SetTrigger("MoveDown");
@@ -422,8 +435,6 @@ public class PlayerController : MonoBehaviour
         if (Mathf.Floor(Vector2.Distance(transform.position, flightStartingPoint)) >= Mathf.Floor(flightDistance))
         {
             transform.position = new Vector3(enemy.transform.position.x, enemy.transform.position.y, transform.position.z);
-            Destroy(enemy);
-            DecreaseBloodlustCounter(enemyDecreaseAmount);
         }
 
         if (flySoundInstance)
@@ -460,6 +471,7 @@ public class PlayerController : MonoBehaviour
 
             canMove = false;
             Instantiate(hat, transform.position - new Vector3(0, 0, 1), Quaternion.identity);
+            currentSword.AddComponent<RandomVelocity>();
             animator.enabled = false;
             GetComponent<SpriteRenderer>().sprite = deadSprite;
             yield return new WaitForSeconds(1f);
@@ -480,5 +492,13 @@ public class PlayerController : MonoBehaviour
         }
 
         return layerNumber - 1;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Enemy" && collision.gameObject == enemy)
+        {
+            inEnemy = true;
+        }
     }
 }
