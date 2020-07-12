@@ -460,6 +460,8 @@ MonoBehaviour:
   hat: {fileID: 4279001946131027730, guid: dcb342616e2cdbf41bc58646d706f0ac, type: 3}
   runParticles: {fileID: 5287519399648422683}
   stepParticles: {fileID: 7828514258486220823}
+  enemyKillParticles: {fileID: 2744165398832119447, guid: 64e54b04215bcd7488b925f7b69d3c01,
+    type: 3}
   stepSound: {fileID: 5607133942725299077, guid: b81c30cef4aadfc40b4f071c950615b5,
     type: 3}
   flySound: {fileID: 7668915635445949874, guid: d155a0d2e26829145baffc2fb91089fa,

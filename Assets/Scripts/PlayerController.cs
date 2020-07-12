@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject rightSwordFly;
     [SerializeField] private Sprite deadSprite;
     [SerializeField] [Range(0.001f, 1.0f)] private float growSpeed = 0.025f;
-    [SerializeField] private GameObject hat, runParticles, stepParticles;
+    [SerializeField] private GameObject hat, runParticles, stepParticles, enemyKillParticles;
 
     private GameObject currentSword, flightSword, afterFlightSword;
     private Animator animator;
@@ -297,7 +297,6 @@ public class PlayerController : MonoBehaviour
             {
                 if (Vector2.Distance(transform.position, flightStartingPoint) >= flightDistance)
                 {
-                    Debug.Log("Got enemy");
                     transform.position = new Vector3(enemy.transform.position.x, enemy.transform.position.y, transform.position.z);
                     Destroy(enemy);
                     DecreaseBloodlustCounter(enemyDecreaseAmount);
@@ -307,6 +306,7 @@ public class PlayerController : MonoBehaviour
                         flySoundInstance.GetComponent<AudioSource>().Stop();
                     }
                     Instantiate(killEnemySound);
+                    Instantiate(enemyKillParticles, transform.position, enemyKillParticles.transform.rotation);
 
                     inEnemy = false;
                     runParticles.GetComponent<ParticleSystem>().Stop();
@@ -469,6 +469,8 @@ public class PlayerController : MonoBehaviour
 
             screenShake.ShakeScreen(0.3f, 0.3f, 2);
 
+            flying = false;
+            isMoving = false;
             canMove = false;
             Instantiate(hat, transform.position - new Vector3(0, 0, 1), Quaternion.identity);
             currentSword.AddComponent<RandomVelocity>();

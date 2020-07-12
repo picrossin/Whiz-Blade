@@ -9,6 +9,7 @@ public class Box : MonoBehaviour
     [SerializeField] private LayerMask wallLayerMask;
     [SerializeField] private string pitTag = "Pit";
     [SerializeField] private Sprite pitFilledSprite;
+    [SerializeField] private GameObject killEnemySound, killEnemyParticles;
 
     public bool upHit = false, downHit = false, rightHit = false, leftHit = false;
     private bool overPit = false, overEnemy = false;
@@ -31,6 +32,8 @@ public class Box : MonoBehaviour
         if (overEnemy && enemyObject != null && Vector2.Distance(transform.position, enemyObject.transform.position) < 0.1f)
         {
             Destroy(enemyObject);
+            Instantiate(killEnemySound);
+            Instantiate(killEnemyParticles, transform.position, killEnemyParticles.transform.rotation);
             overEnemy = false;
         }
     }
