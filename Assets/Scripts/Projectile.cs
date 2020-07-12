@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] private Vector2 direction;
     [SerializeField] [Range(1.0f, 50.0f)] private float movementSmoothingAmount = 40.0f;
     [SerializeField] private string[] collisionTags;
+    [SerializeField] private GameObject sprite;
 
     private bool moving;
     private Vector3 smoothedPosition = Vector3.zero, targetPosition = Vector3.zero;
@@ -58,6 +59,18 @@ public class Projectile : MonoBehaviour
     public void SetDirection(Vector2 dir)
     {
         direction = dir;
+        if (dir.x == -1)
+        {
+            sprite.transform.rotation = Quaternion.Euler(0, 0, 180);
+        }
+        else if (dir.y == 1)
+        {
+            sprite.transform.rotation = Quaternion.Euler(0, 0, -90);
+        }
+        else if (dir.y == -1)
+        {
+            sprite.transform.rotation = Quaternion.Euler(0, 0, 90);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
