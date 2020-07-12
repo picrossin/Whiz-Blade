@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RandomVelocity : MonoBehaviour
 {
-    [SerializeField] private float speed = 1f;
+    [SerializeField] private float speed = 0.025f;
 
     private float rotationSpeed = 0f;
     private Vector2 velocity = Vector2.zero;
