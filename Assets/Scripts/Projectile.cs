@@ -6,7 +6,6 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] private Vector2 direction;
     [SerializeField] [Range(1.0f, 50.0f)] private float movementSmoothingAmount = 40.0f;
-    [SerializeField] [Range(1, 6)] private int damage = 3;
     [SerializeField] private string[] collisionTags;
 
     private bool moving;
@@ -44,7 +43,7 @@ public class Projectile : MonoBehaviour
         {
             if (player != null && Vector2.Distance(player.transform.position, transform.position) < 0.1f)
             {
-                player.GetComponent<PlayerController>().IncreaseBloodLustCounter(damage);
+                player.GetComponent<PlayerController>().IncreaseBloodLustCounter(player.GetComponent<PlayerController>().GetLustMax());
                 Destroy(gameObject);
             }
         }
