@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject rightSwordFly;
     [SerializeField] private Sprite deadSprite;
     [SerializeField] [Range(0.001f, 1.0f)] private float growSpeed = 0.025f;
-    [SerializeField] private GameObject hat;
+    [SerializeField] private GameObject hat, runParticles;
 
     private GameObject currentSword, flightSword, afterFlightSword;
     private Animator animator;
@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        runParticles.GetComponent<ParticleSystem>().Stop();
         currentSword = downSwordIdle;
         animator = GetComponent<Animator>();
         canMove = false;
@@ -194,8 +195,26 @@ public class PlayerController : MonoBehaviour
                 flying = true;
 
                 if (!flightDistanceSet)
-                {
+                { 
                     animator.SetTrigger(flightTrigger);
+                    runParticles.GetComponent<ParticleSystem>().Play();
+                    if (facing.x == 1)
+                    {
+                        runParticles.transform.rotation = Quaternion.Euler(0, 0, 0);
+                    }
+                    else if (facing.x == -1)
+                    {
+                        runParticles.transform.rotation = Quaternion.Euler(0, 0, 180);
+                    }
+                    else if (facing.y == 1)
+                    {
+                        runParticles.transform.rotation = Quaternion.Euler(0, 0, 90);
+                    }
+                    else if (facing.y == -1)
+                    {
+                        runParticles.transform.rotation = Quaternion.Euler(0, 0, -90);
+                    }
+
                     currentSword.GetComponent<SpriteRenderer>().enabled = false;
                     currentSword = flightSword;
                     flightDistance = Vector3.Distance(transform.position, enemy.transform.position);
@@ -255,6 +274,7 @@ public class PlayerController : MonoBehaviour
                     Destroy(enemy);
                     DecreaseBloodlustCounter(enemyDecreaseAmount);
 
+                    runParticles.GetComponent<ParticleSystem>().Stop();
                     screenShake.ShakeScreen(0.2f, 0.1f, 2);
                     movementManager.Move();
                     movement = Vector3.zero;
@@ -384,6 +404,7 @@ public class PlayerController : MonoBehaviour
             DecreaseBloodlustCounter(enemyDecreaseAmount);
         }
 
+        runParticles.GetComponent<ParticleSystem>().Stop();
         movementManager.Move();
         movement = Vector3.zero;
         flightAvailable = false;
