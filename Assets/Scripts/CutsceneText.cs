@@ -9,7 +9,9 @@ public class CutsceneText : MonoBehaviour
     [SerializeField] private int textSlowness = 2;
     [SerializeField] private List<string> dialogueBoxes = new List<string>();
     [SerializeField] private GameObject sound;
+    [SerializeField] private GameObject cut2, cut3, textBox;
 
+    private int cutscenePart = 0;
     private int textWaitCount = 0;
     private string currentString = "";
     private int currentDialogueLineIndex = 0;
@@ -25,44 +27,61 @@ public class CutsceneText : MonoBehaviour
 
     private void Update()
     {
-        if (textWaitCount == 0 && !doneWithLine)
+        if (cutscenePart == 2)
         {
-            if (currentString[textCharCount] != ' ')
+            textBox.SetActive(true);
+
+            if (textWaitCount == 0 && !doneWithLine)
             {
-                GameObject instance = Instantiate(sound);
-                instance.GetComponent<AudioSource>().pitch = Random.Range(0.95f, 1.05f);
+                if (currentString[textCharCount] != ' ')
+                {
+                    GameObject instance = Instantiate(sound);
+                    instance.GetComponent<AudioSource>().pitch = Random.Range(0.95f, 1.05f);
+                }
+
+                text.text += currentString[textCharCount];
+                textCharCount++;
+
+                if (textCharCount == currentString.Length)
+                {
+                    doneWithLine = true;
+                }
             }
 
-            text.text += currentString[textCharCount];
-            textCharCount++;
-            
-
-            if (textCharCount == currentString.Length)
+            textWaitCount++;
+            if (textWaitCount > textSlowness)
             {
-                doneWithLine = true;
+                textWaitCount = 0;
             }
-        }
-
-        textWaitCount++;
-        if (textWaitCount > textSlowness)
-        {
-            textWaitCount = 0;
         }
 
         if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Fire2") || Input.GetButtonDown("Fire3") || Input.GetButtonDown("Submit"))
         {
-            textCharCount = 0;
-            textWaitCount = 0;
-            currentDialogueLineIndex++;
-            if (currentDialogueLineIndex < dialogueBoxes.Count)
+            if (cutscenePart == 0)
             {
-                text.text = "";
-                currentString = dialogueBoxes[currentDialogueLineIndex];
-                doneWithLine = false;
+                cutscenePart++;
+                cut2.SetActive(true);
+            }
+            else if (cutscenePart == 1)
+            {
+                cutscenePart++;
+                cut3.SetActive(true);
             }
             else
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                textCharCount = 0;
+                textWaitCount = 0;
+                currentDialogueLineIndex++;
+                if (currentDialogueLineIndex < dialogueBoxes.Count)
+                {
+                    text.text = "";
+                    currentString = dialogueBoxes[currentDialogueLineIndex];
+                    doneWithLine = false;
+                }
+                else
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                }
             }
         }
     }

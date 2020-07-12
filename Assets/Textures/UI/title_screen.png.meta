@@ -1,13 +1,19 @@
 fileFormatVersion: 2
-guid: 2404eb1d7c8749041bd55d8141f74937
+guid: e6b04b601536a074ba89aa3ec9fc7aed
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6511037384521047177
-    second: cutscene1_chest_discovery_0
+      213: -4649193273016713102
+    second: title_screen_0
   - first:
-      213: 4073199966910743883
-    second: cutscene1_chest_discovery_1
+      213: 8999459459377719239
+    second: title_screen_1
+  - first:
+      213: 776625289613869271
+    second: title_screen_2
+  - first:
+      213: -8235261521011115198
+    second: title_screen_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -38,7 +44,7 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: 1
+    aniso: 2
     mipBias: -100
     wrapU: 1
     wrapV: 1
@@ -141,7 +147,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: cutscene1_chest_discovery_0
+      name: title_screen_0
       rect:
         serializedVersion: 2
         x: 0
@@ -155,14 +161,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 773a558eef524a5a0800000000000000
-      internalID: -6511037384521047177
+      spriteID: 27004b5c95fba7fb0800000000000000
+      internalID: -4649193273016713102
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cutscene1_chest_discovery_1
+      name: title_screen_1
       rect:
         serializedVersion: 2
         x: 704
@@ -176,8 +182,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b4509d60ac9e68830800000000000000
-      internalID: 4073199966910743883
+      spriteID: 7c7ecb672b084ec70800000000000000
+      internalID: 8999459459377719239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: title_screen_2
+      rect:
+        serializedVersion: 2
+        x: 1408
+        y: 0
+        width: 704
+        height: 396
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d0050f069027ca00800000000000000
+      internalID: 776625289613869271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: title_screen_3
+      rect:
+        serializedVersion: 2
+        x: 2112
+        y: 0
+        width: 704
+        height: 396
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24b70b7674976bd80800000000000000
+      internalID: -8235261521011115198
       vertices: []
       indices: 
       edges: []
@@ -185,7 +233,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 19cb3ef3d969d7c4791e79a49f29b9bb
+    spriteID: 88b9a55d3d9981842a8bf3fc7ac45f54
     internalID: 0
     vertices: []
     indices: 
