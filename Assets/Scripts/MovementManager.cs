@@ -24,6 +24,11 @@ public class MovementManager : MonoBehaviour
         {
             Instantiate(levelMusic, Vector3.zero, Quaternion.identity);
         }
+
+        if (GameObject.FindGameObjectWithTag("TitleMusic"))
+        {
+            Destroy(GameObject.FindGameObjectWithTag("TitleMusic"));
+        }
     }
 
     private void Update()
