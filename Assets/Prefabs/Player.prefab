@@ -430,7 +430,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSmoothingAmount: 20
-  baseFlySpeed: 0.1
+  baseFlySpeed: 0.05
   flightAccelerationAmount: 0.002
   lustMax: 6
   enemyDecreaseAmount: 3

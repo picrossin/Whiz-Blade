@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour
     private GameObject currentSword, flightSword, afterFlightSword;
     private Animator animator;
     private bool growing = true, falling = false, playingDeathAnimation = false;
+    private ScreenShake screenShake;
 
     private void Start()
     {
@@ -97,6 +98,12 @@ public class PlayerController : MonoBehaviour
             if (movementManager == null)
             {
                 movementManager = GameObject.FindWithTag("MovementManager").GetComponent<MovementManager>();
+            }
+
+            // Get screen shake
+            if (screenShake == null)
+            {
+                screenShake = GameObject.FindWithTag("MainCamera").GetComponent<ScreenShake>();
             }
 
             // Collisions
@@ -236,6 +243,7 @@ public class PlayerController : MonoBehaviour
                     Destroy(enemy);
                     DecreaseBloodlustCounter(enemyDecreaseAmount);
 
+                    screenShake.ShakeScreen(0.2f, 0.1f, 2);
                     movementManager.Move();
                     movement = Vector3.zero;
                     flightAvailable = false;
@@ -243,6 +251,7 @@ public class PlayerController : MonoBehaviour
                     flying = false;
                     flightDistanceSet = false;
                     animator.SetTrigger(afterFlightTrigger);
+                    currentFlightSpeed = 0f;
                     currentSword.GetComponent<SpriteRenderer>().enabled = false;
                     currentSword = afterFlightSword;
                 }
@@ -305,6 +314,7 @@ public class PlayerController : MonoBehaviour
     public void DecreaseBloodlustCounter(int value)
     {
         lustCounter = Mathf.Max(0, lustCounter - value);
+        screenShake.ShakeScreen(0.2f, 0.1f, 2);
         CheckReload();
     }
 
@@ -345,6 +355,8 @@ public class PlayerController : MonoBehaviour
 
     private void ResetAfterFlight(RaycastHit2D hit, Vector3 displacement)
     {
+        screenShake.ShakeScreen(0.2f, 0.1f, 2);
+
         transform.position = hit.transform.position - displacement;
         IncreaseBloodLustCounter(1);
 
@@ -361,6 +373,7 @@ public class PlayerController : MonoBehaviour
         isMoving = false;
         flying = false;
         flightDistanceSet = false;
+        currentFlightSpeed = 0f;
     }
 
     private void CheckReload()
@@ -376,6 +389,8 @@ public class PlayerController : MonoBehaviour
         if (!playingDeathAnimation)
         {
             playingDeathAnimation = true;
+
+            screenShake.ShakeScreen(0.3f, 0.3f, 2);
 
             canMove = false;
             Instantiate(hat, transform.position - new Vector3(0, 0, 1), Quaternion.identity);
