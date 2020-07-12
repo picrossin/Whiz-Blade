@@ -122,3 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPath: {fileID: 0}
+  movementSmoothingAmount: 20
+  wallLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
