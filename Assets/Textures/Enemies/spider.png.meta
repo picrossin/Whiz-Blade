@@ -1,19 +1,7 @@
 fileFormatVersion: 2
-guid: e7cd49a9d17b1d2459d70b417d97860c
+guid: 119576debf5a75c4fbefa5e86bb41979
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: 6668187050993418405
-    second: bloodjuice_0
-  - first:
-      213: 4855107251174749968
-    second: bloodjuice_1
-  - first:
-      213: 7607268125488914537
-    second: bloodjuice_2
-  - first:
-      213: 4088672597415571577
-    second: bloodjuice_3
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -145,95 +133,11 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: bloodjuice_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5a082561bc82a8c50800000000000000
-      internalID: 6668187050993418405
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: bloodjuice_1
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 017b1bc425ec06340800000000000000
-      internalID: 4855107251174749968
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: bloodjuice_2
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9602bea1e02729960800000000000000
-      internalID: 7607268125488914537
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: bloodjuice_3
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 97034db8012edb830800000000000000
-      internalID: 4088672597415571577
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: fde9778b6995f944dafa9f16458047cc
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 

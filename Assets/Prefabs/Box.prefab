@@ -147,6 +147,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2304
   pitTag: Pit
+  pitFilledSprite: {fileID: 21300000, guid: 6309ceda4a3e1564b845f66f183488e5, type: 3}
   upHit: 0
   downHit: 0
   rightHit: 0

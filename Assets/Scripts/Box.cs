@@ -8,8 +8,11 @@ public class Box : MonoBehaviour
     [Header("Collision Settings")]
     [SerializeField] private LayerMask wallLayerMask;
     [SerializeField] private string pitTag = "Pit";
+    [SerializeField] private Sprite pitFilledSprite;
 
     public bool upHit = false, downHit = false, rightHit = false, leftHit = false;
+    private bool overPit = false;
+    private GameObject pitObject;
 
     private void Update()
     {
@@ -18,14 +21,21 @@ public class Box : MonoBehaviour
         downHit = Physics2D.Raycast(transform.position + new Vector3(0, -0.6f), Vector2.down, 0.4f, wallLayerMask);
         rightHit = Physics2D.Raycast(transform.position + new Vector3(0.6f, 0), Vector2.right, 0.4f, wallLayerMask);
         leftHit = Physics2D.Raycast(transform.position + new Vector3(-0.6f, 0), Vector2.left, 0.4f, wallLayerMask);
+
+        if (overPit && Vector2.Distance(transform.position, pitObject.transform.position) < 0.1f)
+        {
+            pitObject.GetComponent<Pit>().SetFilledTexture(pitFilledSprite);
+            Destroy(gameObject);
+            overPit = false;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == pitTag)
         {
-            Destroy(collision.gameObject);
-            Destroy(gameObject);
+            pitObject = collision.gameObject;
+            overPit = true;
         }
     }
 }

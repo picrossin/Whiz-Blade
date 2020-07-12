@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: e7cd49a9d17b1d2459d70b417d97860c
+guid: 48e2a1e41339cb848bcc6cabcdbb98d0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6668187050993418405
-    second: bloodjuice_0
+      213: -1368973852675310178
+    second: pink ball_0
   - first:
-      213: 4855107251174749968
-    second: bloodjuice_1
+      213: -7659184239307282284
+    second: pink ball_1
   - first:
-      213: 7607268125488914537
-    second: bloodjuice_2
+      213: 174389938809227986
+    second: pink ball_2
   - first:
-      213: 4088672597415571577
-    second: bloodjuice_3
+      213: -343061439070081927
+    second: pink ball_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -147,7 +147,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bloodjuice_0
+      name: pink ball_0
       rect:
         serializedVersion: 2
         x: 0
@@ -161,14 +161,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5a082561bc82a8c50800000000000000
-      internalID: 6668187050993418405
+      spriteID: e9d7d7cb88d600de0800000000000000
+      internalID: -1368973852675310178
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bloodjuice_1
+      name: pink ball_1
       rect:
         serializedVersion: 2
         x: 32
@@ -182,14 +182,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 017b1bc425ec06340800000000000000
-      internalID: 4855107251174749968
+      spriteID: 498a1d2b38c15b590800000000000000
+      internalID: -7659184239307282284
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bloodjuice_2
+      name: pink ball_2
       rect:
         serializedVersion: 2
         x: 64
@@ -203,14 +203,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9602bea1e02729960800000000000000
-      internalID: 7607268125488914537
+      spriteID: 2da4023b9be8b6200800000000000000
+      internalID: 174389938809227986
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bloodjuice_3
+      name: pink ball_3
       rect:
         serializedVersion: 2
         x: 96
@@ -224,8 +224,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 97034db8012edb830800000000000000
-      internalID: 4088672597415571577
+      spriteID: 97ce71450733d3bf0800000000000000
+      internalID: -343061439070081927
       vertices: []
       indices: 
       edges: []
@@ -233,7 +233,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: fde9778b6995f944dafa9f16458047cc
+    spriteID: fcd06497d57d18a4d99f74a6d4dbba6d
     internalID: 0
     vertices: []
     indices: 
