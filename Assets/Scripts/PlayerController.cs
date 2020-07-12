@@ -262,6 +262,11 @@ public class PlayerController : MonoBehaviour
         return lustMax;
     }
 
+    public int GetCurrentLust()
+    {
+        return lustCounter;
+    }
+
     public void DecreaseBloodlustCounter(int value)
     {
         lustCounter = Mathf.Max(0, lustCounter - value);

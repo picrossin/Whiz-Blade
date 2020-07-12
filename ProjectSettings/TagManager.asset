@@ -13,6 +13,7 @@ TagManager:
   - Wall
   - Gate
   - ShootingEnemy
+  - HealthBar
   layers:
   - Default
   - TransparentFX

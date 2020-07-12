@@ -5,11 +5,17 @@ using UnityEngine;
 public class BloodBag : MonoBehaviour
 {
     [SerializeField] [Range(1, 10)] private int value = 3;
+    [SerializeField] private string healthBarTag = "HealthBar";
 
-    private GameObject player;
+    private GameObject player, healthBar;
 
     void Update()
     {
+        if (healthBar == null)
+        {
+            healthBar = GameObject.FindWithTag(healthBarTag);
+        }
+
         if (player == null)
         {
             player = GameObject.FindWithTag("Player");
@@ -18,6 +24,10 @@ public class BloodBag : MonoBehaviour
         {
             if (Vector2.Distance(player.transform.position, transform.position) < 0.1f)
             {
+                if (healthBar != null)
+                {
+                    healthBar.GetComponent<HealthBar>().PlayJuiceAnimation();
+                }
                 player.GetComponent<PlayerController>().DecreaseBloodlustCounter(value);
                 Destroy(gameObject);
             }

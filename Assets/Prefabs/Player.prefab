@@ -451,7 +451,7 @@ MonoBehaviour:
   downSwordFly: {fileID: 4060715963859422938}
   upSwordFly: {fileID: 858942255202001846}
   leftSwordFly: {fileID: 3670586835113988247}
-  righhtSwordFly: {fileID: 9055204074671024565}
+  rightSwordFly: {fileID: 9055204074671024565}
 --- !u!61 &4164677603339097593
 BoxCollider2D:
   m_ObjectHideFlags: 0
