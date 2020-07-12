@@ -291,9 +291,8 @@ public class PlayerController : MonoBehaviour
                     }
                 }
             }
-
             // Fly to the enemy if necessary
-            if (flying)
+            else if (flying)
             {
                 if (Vector2.Distance(transform.position, flightStartingPoint) >= flightDistance)
                 {

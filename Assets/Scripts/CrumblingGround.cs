@@ -10,7 +10,7 @@ public class CrumblingGround : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.tag == playerTag)
+        if (collision.tag == playerTag && !collision.transform.GetComponent<PlayerController>().IsFlying())
         {
             Instantiate(sound);
             Instantiate(pit, transform.position, Quaternion.identity);

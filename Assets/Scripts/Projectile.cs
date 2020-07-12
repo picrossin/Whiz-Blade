@@ -51,7 +51,7 @@ public class Projectile : MonoBehaviour
             }
         }
 
-        if (overBox && Vector2.Distance(transform.position, currentBox.transform.position) < 0.1f)
+        if (overBox && Vector2.Distance(transform.position, currentBox.transform.position) < 0.3f)
         {
             overBox = false;
             Destroy(gameObject);
@@ -87,6 +87,7 @@ public class Projectile : MonoBehaviour
         {
             if (collision.tag == "Box")
             {
+                Destroy(gameObject);
                 overBox = true;
                 currentBox = collision.gameObject;
             }
