@@ -12,6 +12,8 @@ public class Projectile : MonoBehaviour
     private bool moving;
     private Vector3 smoothedPosition = Vector3.zero, targetPosition = Vector3.zero;
     private GameObject player;
+    private bool overBox = false;
+    private GameObject currentBox;
 
     private void Start()
     {
@@ -48,6 +50,12 @@ public class Projectile : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+
+        if (overBox && Vector2.Distance(transform.position, currentBox.transform.position) < 0.1f)
+        {
+            overBox = false;
+            Destroy(gameObject);
+        }
     }
 
     public void Move()
@@ -59,7 +67,7 @@ public class Projectile : MonoBehaviour
     public void SetDirection(Vector2 dir)
     {
         direction = dir;
-        if (dir.x == -1)
+        if (dir.x == 1)
         {
             sprite.transform.rotation = Quaternion.Euler(0, 0, 180);
         }
@@ -77,6 +85,11 @@ public class Projectile : MonoBehaviour
     {
         foreach (string tag in collisionTags)
         {
+            if (collision.tag == "Box")
+            {
+                overBox = true;
+                currentBox = collision.gameObject;
+            }
             if (collision.tag == tag)
             {
                 Destroy(gameObject);

@@ -11,8 +11,8 @@ public class Box : MonoBehaviour
     [SerializeField] private Sprite pitFilledSprite;
 
     public bool upHit = false, downHit = false, rightHit = false, leftHit = false;
-    private bool overPit = false;
-    private GameObject pitObject;
+    private bool overPit = false, overEnemy;
+    private GameObject pitObject, enemyObject;
 
     private void Update()
     {
@@ -28,6 +28,11 @@ public class Box : MonoBehaviour
             Destroy(gameObject);
             overPit = false;
         }
+        if (overEnemy && Vector2.Distance(transform.position, enemyObject.transform.position) < 0.1f)
+        {
+            Destroy(enemyObject);
+            overEnemy = false;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -36,6 +41,11 @@ public class Box : MonoBehaviour
         {
             pitObject = collision.gameObject;
             overPit = true;
+        } 
+        else if (collision.tag == "Enemy" || collision.tag == "MovingEnemy" || collision.tag == "ShootingEnemy")
+        {
+            enemyObject = collision.gameObject;
+            overEnemy = true;
         }
     }
 }

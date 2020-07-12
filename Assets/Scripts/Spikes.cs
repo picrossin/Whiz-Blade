@@ -18,7 +18,6 @@ public class Spikes : MonoBehaviour
             if (Vector2.Distance(player.transform.position, transform.position) < 0.1f)
             {
                 player.GetComponent<PlayerController>().IncreaseBloodLustCounter(player.GetComponent<PlayerController>().GetLustMax());
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
     }

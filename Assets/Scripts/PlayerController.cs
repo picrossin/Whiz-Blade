@@ -188,7 +188,7 @@ public class PlayerController : MonoBehaviour
 
             // Look for enemies
             RaycastHit2D enemyLook = Physics2D.Raycast(transform.position, facing, Mathf.Infinity, wallLayerMask | enemyMask);
-            if (enemyLook && enemyLook.transform.gameObject.layer == LayerMaskToLayer(enemyMask) && flightAvailable)
+            if (enemyLook && enemyLook.transform.gameObject.layer == LayerMaskToLayer(enemyMask) && flightAvailable && !isMoving)
             {
                 enemy = enemyLook.transform.gameObject;
                 flying = true;
@@ -251,7 +251,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (Vector2.Distance(transform.position, flightStartingPoint) >= flightDistance)
                 {
-                    transform.position = enemy.transform.position;
+                    transform.position = new Vector3(enemy.transform.position.x, enemy.transform.position.y, transform.position.z);
                     Destroy(enemy);
                     DecreaseBloodlustCounter(enemyDecreaseAmount);
 
@@ -374,12 +374,12 @@ public class PlayerController : MonoBehaviour
     {
         screenShake.ShakeScreen(0.2f, 0.1f, 2);
 
-        transform.position = hit.transform.position - displacement;
+        transform.position = new Vector3(hit.transform.position.x - displacement.x, hit.transform.position.y - displacement.y, transform.position.z);
         IncreaseBloodLustCounter(1);
 
         if (Mathf.Floor(Vector2.Distance(transform.position, flightStartingPoint)) >= Mathf.Floor(flightDistance))
         {
-            transform.position = enemy.transform.position;
+            transform.position = new Vector3(enemy.transform.position.x, enemy.transform.position.y, transform.position.z);
             Destroy(enemy);
             DecreaseBloodlustCounter(enemyDecreaseAmount);
         }

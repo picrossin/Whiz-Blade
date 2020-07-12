@@ -22,7 +22,7 @@ public class BloodBag : MonoBehaviour
         }
         else
         {
-            if (Vector2.Distance(player.transform.position, transform.position) < 0.1f)
+            if (Vector2.Distance(player.transform.position, transform.position) < 0.2f)
             {
                 if (healthBar != null)
                 {

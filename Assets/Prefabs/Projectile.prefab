@@ -178,7 +178,6 @@ MonoBehaviour:
   movementSmoothingAmount: 40
   collisionTags:
   - Wall
-  - Box
   - Gate
   sprite: {fileID: 1658232646151421608}
 --- !u!50 &4336550969308077127
