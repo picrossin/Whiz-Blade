@@ -17,7 +17,7 @@ public class Exit : MonoBehaviour
         {
             if (Vector2.Distance(player.transform.position, transform.position) < 0.1f)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                player.GetComponent<PlayerController>().SetAscending(true);
             }
         }
     }

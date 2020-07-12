@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
 
     private GameObject currentSword, flightSword, afterFlightSword;
     private Animator animator;
-    private bool growing = true, falling = false, playingDeathAnimation = false;
+    private bool growing = true, falling = false, ascending = false, playingDeathAnimation = false;
     private ScreenShake screenShake;
 
     private void Start()
@@ -90,6 +90,18 @@ public class PlayerController : MonoBehaviour
             {
                 IncreaseBloodLustCounter(GetLustMax());
                 falling = false;
+            }
+        }
+        else if (ascending)
+        {
+            if (transform.localScale.x > 0f || transform.localScale.y > 0f)
+            {
+                transform.localScale -= new Vector3(growSpeed, growSpeed, 0f);
+            }
+            else
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                ascending = false;
             }
         }
         else
@@ -332,6 +344,11 @@ public class PlayerController : MonoBehaviour
     public void SetFalling(bool value)
     {
         falling = value;
+    }
+
+    public void SetAscending(bool value)
+    {
+        ascending = value;
     }
 
     private void SetInput(RaycastHit2D hit, Vector2 direction)
