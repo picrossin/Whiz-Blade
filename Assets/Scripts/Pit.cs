@@ -18,8 +18,7 @@ public class Pit : MonoBehaviour
         {
             if (Vector2.Distance(player.transform.position, transform.position) < 0.1f && !filled && !player.GetComponent<PlayerController>().IsFlying())
             {
-                player.GetComponent<PlayerController>().IncreaseBloodLustCounter(player.GetComponent<PlayerController>().GetLustMax());
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                player.GetComponent<PlayerController>().SetFalling(true);
             }
         }
     }

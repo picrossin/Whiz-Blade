@@ -452,6 +452,9 @@ MonoBehaviour:
   upSwordFly: {fileID: 858942255202001846}
   leftSwordFly: {fileID: 3670586835113988247}
   rightSwordFly: {fileID: 9055204074671024565}
+  deadSprite: {fileID: 21300000, guid: 410e364eaec52214d97c609a196646ba, type: 3}
+  growSpeed: 0.025
+  hat: {fileID: 4279001946131027730, guid: dcb342616e2cdbf41bc58646d706f0ac, type: 3}
 --- !u!61 &4164677603339097593
 BoxCollider2D:
   m_ObjectHideFlags: 0
