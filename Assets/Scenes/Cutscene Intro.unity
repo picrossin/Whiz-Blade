@@ -361,7 +361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37842776d4298724a8d32e14274b6451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textSlowness: 16
+  textSlowness: 2
   dialogueBoxes:
   - Bahahahaha! Foolish fool!
   - 'When my bar of blood is full,       I will surely lose control. '

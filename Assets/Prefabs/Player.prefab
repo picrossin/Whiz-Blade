@@ -456,7 +456,7 @@ MonoBehaviour:
   leftSwordFly: {fileID: 3670586835113988247}
   rightSwordFly: {fileID: 9055204074671024565}
   deadSprite: {fileID: 21300000, guid: 410e364eaec52214d97c609a196646ba, type: 3}
-  growSpeed: 0.01
+  growSpeed: 0.02
   hat: {fileID: 4279001946131027730, guid: dcb342616e2cdbf41bc58646d706f0ac, type: 3}
   runParticles: {fileID: 5287519399648422683}
   stepParticles: {fileID: 7828514258486220823}
