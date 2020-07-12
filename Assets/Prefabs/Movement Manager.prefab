@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5148734295533842632}
   m_Layer: 0
   m_Name: Movement Manager
-  m_TagString: Untagged
+  m_TagString: MovementManager
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43,3 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71275fe7774955542a850fa8d2f45051, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movingEnemyTag: MovingEnemy
+  shootingEnemyTag: ShootingEnemy
+  projectileTag: Projectile
