@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 flightStartingPoint = Vector2.zero;
     private float currentFlightSpeed = 0f, flightDistance = 0f;
     private MovementManager movementManager;
+    private string flightTrigger = "FlyDown", afterFlightTrigger = "MoveDown";
 
     // Blood-lust counter
     [Header("Bloodlust Settings")]
@@ -36,6 +37,25 @@ public class PlayerController : MonoBehaviour
 
     // Enemy
     private GameObject enemy = null;
+
+    // Animation
+    [Header("Animation Settings Settings")]
+    [SerializeField] private GameObject downSwordIdle;
+    [SerializeField] private GameObject upSwordIdle;
+    [SerializeField] private GameObject leftSwordIdle;
+    [SerializeField] private GameObject rightSwordIdle;
+    [SerializeField] private GameObject downSwordFly;
+    [SerializeField] private GameObject upSwordFly;
+    [SerializeField] private GameObject leftSwordFly;
+    [SerializeField] private GameObject rightSwordFly;
+    private GameObject currentSword, flightSword, afterFlightSword;
+    private Animator animator;
+
+    private void Start()
+    {
+        currentSword = downSwordIdle;
+        animator = GetComponent<Animator>();
+    }
 
     private void Update()
     {
@@ -57,24 +77,52 @@ public class PlayerController : MonoBehaviour
             canPushBox = false;
             if (Input.GetButtonDown("Up"))
             {
+                animator.SetTrigger("MoveUp");
+                flightTrigger = "FlyUp";
+                afterFlightTrigger = "MoveUp";
+                currentSword.GetComponent<SpriteRenderer>().enabled = false;
+                currentSword = upSwordIdle;
+                flightSword = upSwordFly;
+                afterFlightSword = upSwordIdle;
                 SetInput(upHit, new Vector2(0, 1));
                 if (touchingBox != null && !touchingBox.GetComponent<Box>().upHit)
                     canPushBox = true;
             }
             else if (Input.GetButtonDown("Down"))
             {
+                animator.SetTrigger("MoveDown");
+                flightTrigger = "FlyDown";
+                afterFlightTrigger = "MoveDown";
+                currentSword.GetComponent<SpriteRenderer>().enabled = false;
+                currentSword = downSwordIdle;
+                flightSword = downSwordFly;
+                afterFlightSword = downSwordIdle;
                 SetInput(downHit, new Vector2(0, -1));
                 if (touchingBox != null && !touchingBox.GetComponent<Box>().downHit)
                     canPushBox = true;
             }
             else if (Input.GetButtonDown("Right"))
             {
+                animator.SetTrigger("MoveRight");
+                flightTrigger = "FlyRight";
+                afterFlightTrigger = "MoveRight";
+                currentSword.GetComponent<SpriteRenderer>().enabled = false;
+                currentSword = rightSwordIdle;
+                flightSword = rightSwordFly;
+                afterFlightSword = rightSwordIdle;
                 SetInput(rightHit, new Vector2(1, 0));
                 if (touchingBox != null && !touchingBox.GetComponent<Box>().rightHit)
                     canPushBox = true;
             }
             else if (Input.GetButtonDown("Left"))
             {
+                animator.SetTrigger("MoveLeft");
+                flightTrigger = "FlyLeft";
+                afterFlightTrigger = "MoveLeft";
+                currentSword.GetComponent<SpriteRenderer>().enabled = false;
+                currentSword = leftSwordIdle;
+                flightSword = leftSwordFly;
+                afterFlightSword = leftSwordIdle;
                 SetInput(leftHit, new Vector2(-1, 0));
                 if (touchingBox != null && !touchingBox.GetComponent<Box>().leftHit)
                     canPushBox = true;
@@ -94,6 +142,9 @@ public class PlayerController : MonoBehaviour
 
             if (!flightDistanceSet)
             {
+                animator.SetTrigger(flightTrigger);
+                currentSword.GetComponent<SpriteRenderer>().enabled = false;
+                currentSword = flightSword;
                 flightDistance = Vector3.Distance(transform.position, enemy.transform.position);
                 flightStartingPoint = transform.position;
                 flightDistanceSet = true;
@@ -157,22 +208,37 @@ public class PlayerController : MonoBehaviour
                 isMoving = false;
                 flying = false;
                 flightDistanceSet = false;
+                animator.SetTrigger(afterFlightTrigger);
+                currentSword.GetComponent<SpriteRenderer>().enabled = false;
+                currentSword = afterFlightSword;
             }
             else if (facing.x == 1 && rightHit)
             {
                 ResetAfterFlight(rightHit, new Vector3(1, 0));
+                animator.SetTrigger("MoveRight");
+                currentSword.GetComponent<SpriteRenderer>().enabled = false;
+                currentSword = rightSwordIdle;
             }
             else if (facing.x == -1 && leftHit)
             {
                 ResetAfterFlight(leftHit, new Vector3(-1, 0));
+                animator.SetTrigger("MoveLeft");
+                currentSword.GetComponent<SpriteRenderer>().enabled = false;
+                currentSword = leftSwordIdle;
             }
             else if (facing.y == 1 && upHit)
             {
                 ResetAfterFlight(upHit, new Vector3(0, 1));
+                animator.SetTrigger("MoveUp");
+                currentSword.GetComponent<SpriteRenderer>().enabled = false;
+                currentSword = upSwordIdle;
             }
             else if (facing.y == -1 && downHit)
             {
                 ResetAfterFlight(downHit, new Vector3(0, -1));
+                animator.SetTrigger("MoveDown");
+                currentSword.GetComponent<SpriteRenderer>().enabled = false;
+                currentSword = downSwordIdle;
             }
             else
             {
@@ -181,6 +247,9 @@ public class PlayerController : MonoBehaviour
                 transform.position += new Vector3(facing.x, facing.y, 0) * currentFlightSpeed;
             }
         }
+
+        // Set correct sword
+        currentSword.GetComponent<SpriteRenderer>().enabled = true;
     }
 
     public void SetLustMax(int value)
