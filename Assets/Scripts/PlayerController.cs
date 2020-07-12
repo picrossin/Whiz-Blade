@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject rightSwordFly;
     [SerializeField] private Sprite deadSprite;
     [SerializeField] [Range(0.001f, 1.0f)] private float growSpeed = 0.025f;
-    [SerializeField] private GameObject hat, runParticles;
+    [SerializeField] private GameObject hat, runParticles, stepParticles;
 
     private GameObject currentSword, flightSword, afterFlightSword;
     private Animator animator;
@@ -60,6 +60,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         runParticles.GetComponent<ParticleSystem>().Stop();
+        stepParticles.GetComponent<ParticleSystem>().Stop();
         currentSword = downSwordIdle;
         animator = GetComponent<Animator>();
         canMove = false;
@@ -252,6 +253,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
+                    stepParticles.GetComponent<ParticleSystem>().Play();
                     IncreaseBloodLustCounter(1);
                     transform.position = targetPosition;
                     movement = Vector3.zero;

@@ -11,7 +11,7 @@ public class Box : MonoBehaviour
     [SerializeField] private Sprite pitFilledSprite;
 
     public bool upHit = false, downHit = false, rightHit = false, leftHit = false;
-    private bool overPit = false, overEnemy;
+    private bool overPit = false, overEnemy = false;
     private GameObject pitObject, enemyObject;
 
     private void Update()
@@ -28,7 +28,7 @@ public class Box : MonoBehaviour
             Destroy(gameObject);
             overPit = false;
         }
-        if (overEnemy && Vector2.Distance(transform.position, enemyObject.transform.position) < 0.1f)
+        if (overEnemy && enemyObject != null && Vector2.Distance(transform.position, enemyObject.transform.position) < 0.1f)
         {
             Destroy(enemyObject);
             overEnemy = false;

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6141908903679421724}
   - component: {fileID: 7150221649888282023}
   - component: {fileID: -5197406875632129967}
+  - component: {fileID: -909105821396780175}
   m_Layer: 9
   m_Name: Moving Enemy
   m_TagString: MovingEnemy
@@ -147,3 +148,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-909105821396780175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6141908903679421713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95321a73d9d28e84a8650b38a19a9cbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectToSpawn: {fileID: 2744165398832119447, guid: 64e54b04215bcd7488b925f7b69d3c01,
+    type: 3}
