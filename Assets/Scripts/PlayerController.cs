@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
     private GameObject enemy = null;
 
     // Animation
-    [Header("Animation Settings Settings")]
+    [Header("Animation Settings")]
     [SerializeField] private GameObject downSwordIdle;
     [SerializeField] private GameObject upSwordIdle;
     [SerializeField] private GameObject leftSwordIdle;
@@ -56,6 +56,15 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private bool growing = true, falling = false, ascending = false, playingDeathAnimation = false;
     private ScreenShake screenShake;
+
+    // Sound
+    [Header("Sound Settings")]
+    [SerializeField] private GameObject stepSound;
+    [SerializeField] private GameObject flySound;
+    [SerializeField] private GameObject killEnemySound;
+    [SerializeField] private GameObject bonkSound;
+
+    private GameObject flySoundInstance = null;
 
     private void Start()
     {
@@ -199,6 +208,8 @@ public class PlayerController : MonoBehaviour
                 { 
                     animator.SetTrigger(flightTrigger);
                     runParticles.GetComponent<ParticleSystem>().Play();
+                    flySoundInstance = Instantiate(flySound);
+
                     if (facing.x == 1)
                     {
                         runParticles.transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -228,6 +239,9 @@ public class PlayerController : MonoBehaviour
             if (canMove && !isMoving && movement != Vector3.zero && !flying &&
                 (touchingBox == null || (touchingBox != null && canPushBox)))
             {
+                GameObject stepInstance = Instantiate(stepSound, transform.position, Quaternion.identity);
+                stepInstance.GetComponent<AudioSource>().pitch = Random.Range(0.9f, 1.1f);
+
                 isMoving = true;
                 movementManager.Move();
                 flightAvailable = true;
@@ -275,6 +289,12 @@ public class PlayerController : MonoBehaviour
                     transform.position = new Vector3(enemy.transform.position.x, enemy.transform.position.y, transform.position.z);
                     Destroy(enemy);
                     DecreaseBloodlustCounter(enemyDecreaseAmount);
+
+                    if (flySoundInstance)
+                    {
+                        flySoundInstance.GetComponent<AudioSource>().Stop();
+                    }
+                    Instantiate(killEnemySound);
 
                     runParticles.GetComponent<ParticleSystem>().Stop();
                     screenShake.ShakeScreen(0.2f, 0.1f, 2);
@@ -405,6 +425,12 @@ public class PlayerController : MonoBehaviour
             Destroy(enemy);
             DecreaseBloodlustCounter(enemyDecreaseAmount);
         }
+
+        if (flySoundInstance)
+        {
+            flySoundInstance.GetComponent<AudioSource>().Stop();
+        }
+        Instantiate(bonkSound);
 
         runParticles.GetComponent<ParticleSystem>().Stop();
         movementManager.Move();

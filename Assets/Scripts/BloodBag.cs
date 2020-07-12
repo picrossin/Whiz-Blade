@@ -6,6 +6,7 @@ public class BloodBag : MonoBehaviour
 {
     [SerializeField] [Range(1, 10)] private int value = 3;
     [SerializeField] private string healthBarTag = "HealthBar";
+    [SerializeField] private GameObject slurpSound;
 
     private GameObject player, healthBar;
 
@@ -29,6 +30,9 @@ public class BloodBag : MonoBehaviour
                     healthBar.GetComponent<HealthBar>().PlayJuiceAnimation();
                 }
                 player.GetComponent<PlayerController>().DecreaseBloodlustCounter(value);
+
+                Instantiate(slurpSound);
+
                 Destroy(gameObject);
             }
         }

@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pit: {fileID: 7370232802175871034, guid: 5f35f7db8e6413749b8d1a3387744299, type: 3}
   playerTag: Player
+  sound: {fileID: 3777651092480833488, guid: af5d6a18f5368ce43a5adc362d2b214f, type: 3}
 --- !u!212 &4166576584728254905
 SpriteRenderer:
   m_ObjectHideFlags: 0

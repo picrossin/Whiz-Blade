@@ -5,8 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class Pit : MonoBehaviour
 {
+    [SerializeField] private GameObject sound;
+
     private GameObject player;
-    private bool filled = false;
+    private bool filled = false, soundPlayed = false;
 
     private void Update()
     {
@@ -18,6 +20,11 @@ public class Pit : MonoBehaviour
         {
             if (Vector2.Distance(player.transform.position, transform.position) < 0.1f && !filled && !player.GetComponent<PlayerController>().IsFlying())
             {
+                if (!soundPlayed)
+                {
+                    Instantiate(sound);
+                    soundPlayed = true;
+                }
                 player.GetComponent<PlayerController>().SetFalling(true);
             }
         }

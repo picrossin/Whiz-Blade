@@ -7,6 +7,7 @@ public class ShootingEnemy : MonoBehaviour
     [SerializeField] private GameObject projectile;
     [SerializeField] private bool shootOnFirstMove = false;
     [SerializeField] private Vector2 direction = Vector2.zero;
+    [SerializeField] private GameObject sound;
 
     private bool shoot = false;
 
@@ -24,6 +25,12 @@ public class ShootingEnemy : MonoBehaviour
                 Quaternion.identity);
 
             instance.GetComponent<Projectile>().SetDirection(direction);
+
+            if (!GameObject.Find("Fireball Sound(Clone)"))
+            {
+                Instantiate(sound);
+            }
+
             shoot = false;
         }
         else

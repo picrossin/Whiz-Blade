@@ -46,6 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 3
+  healthBarTag: HealthBar
+  slurpSound: {fileID: 927099026494043636, guid: 333d3c6dd3996f349ac771ba47a76f9e,
+    type: 3}
 --- !u!212 &5360727734368828324
 SpriteRenderer:
   m_ObjectHideFlags: 0
