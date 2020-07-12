@@ -8,7 +8,7 @@ public class StopMusic : MonoBehaviour
     {
         if (GameObject.FindGameObjectWithTag("LevelMusic"))
         {
-            GameObject.FindGameObjectWithTag("LevelMusic").GetComponent<AudioSource>().Stop();
+            Destroy(GameObject.FindGameObjectWithTag("LevelMusic"));
         }
     }
 }

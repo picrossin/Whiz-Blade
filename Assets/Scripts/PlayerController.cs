@@ -497,7 +497,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Enemy" && collision.gameObject == enemy)
+        if ((collision.tag == "Enemy" || collision.tag == "ShootingEnemy" || collision.tag == "MovingEnemy") && collision.gameObject == enemy)
         {
             inEnemy = true;
         }

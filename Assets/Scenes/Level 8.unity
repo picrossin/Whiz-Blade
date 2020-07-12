@@ -2142,6 +2142,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shooting Enemy (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7674362700273172874, guid: 2e2847599f07cd844abde59cb8f34f14,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7674362700273172874, guid: 2e2847599f07cd844abde59cb8f34f14,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e2847599f07cd844abde59cb8f34f14, type: 3}
 --- !u!4 &1273333810 stripped
